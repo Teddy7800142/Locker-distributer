@@ -17,6 +17,7 @@ const homeroomLockerMap = {
   "211_212": generateRange(874, 914),
   "213_214": generateRange(915, 955),
   "215": generateRange(957, 969),
+  // # of lockers = 245
   
   // Upstairs Sci Hall (AREA 2)
   "229_230": generateRange(642, 689),
@@ -27,7 +28,7 @@ const homeroomLockerMap = {
   "205": generateRange(815, 835),
   "207": generateRange(836, 856),
   "208": generateRange(857, 873),
-
+  // # of lockers = 223
   
   // Downstairs Language Hall (AREA 3)
   "112": [...generateRange(1057, 1082), ...generateRange(1305, 1348)],
@@ -38,10 +39,10 @@ const homeroomLockerMap = {
   "119": generateRange(1247, 1276),
   "120": generateRange(1277, 1304),
   "121": [...generateRange(1349, 1388), ...generateRange(1393, 1430)],
+  // # of lockers = 360
   
   
-  
-  // Downstairs Tech Hall (AREA 4)
+  // Downstairs Tech/Art Hall (AREA 4)
   "129": generateRange(1431, 1524),
   "126": [...generateRange(1525, 1602), ...generateRange(1629, 1670)],
   "122": generateRange(1603, 1628),
@@ -50,8 +51,9 @@ const homeroomLockerMap = {
   "ChiefsOffice": generateRange(1785, 1824),
   "Caf": generateRange(1825, 1840),
   "Receiving": generateRange(1841, 1890),
+  // # of lockers = 451
   
-  // Downstairs New Wing (AREA 5)
+  // Downstairs & Upstairs New Wing (AREA 5)
   "162": generateRange(2000, 2041),
   "162_163": generateRange(2042, 2052),
   "163": [...generateRange(2053, 2075), ...generateRange(2076, 2097)],
@@ -61,12 +63,11 @@ const homeroomLockerMap = {
   "169": generateRange(2177, 2195),
   "172": generateRange(2196, 2200),
   "171": generateRange(2201, 2212),
-  
-  // Upstairs New Wing (AREA 6)
   "253": [...generateRange(2213, 2224), ...generateRange(2225, 2231)],
   "252": [...generateRange(2232, 2254), ...generateRange(2255, 2259)],
   "251": [...generateRange(2260, 2277), ...generateRange(2278, 2282)],
   "250": generateRange(2283, 2299)
+  // # of lockers = 281
   
   
 };
@@ -121,8 +122,31 @@ const students = [
    * 3. Alphabetical 
    * 4. Order  
    *    senior grades, special ed, coop/tech students, upper lockers before lower ones (every other locker in certain locker ranges)
+   *    5. The exact name of homerooms are cooked (cross reference the sheets)
    */
 ];
+
+/*
+ * GENERAL INFO FROM SPREADSHEET (do all portables even have classes)?
+ * P1 = DNE
+ * P2 = completely random ngl
+ * P3 = 132
+ * P4 = 112 (across)
+ * P5 = 105 (outside)
+ * P6 = DNE
+ * P7 = DNE 
+ * P8 = DNE
+ * P9 = DNE
+ * P10 = 163 (outside and across)
+ * P11 = DNE
+ * P12 = 232
+ * P13 = 126 (outside and every other) and 105 (outside and every other)
+ * P14 = 132 (outside and every other/not??) and chief's office
+ * P15 = 132 (outside)
+ * P16 = DNE
+ * Dance = 162 (across)
+ * Gym B = 162 (across) and 162_163 and 163 (outside)
+ */
 
 // Function to assign lockers to students based on their homeroom
 function assignLockers() { // Creates an empty object to store students by their homeroom 
