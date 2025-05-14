@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" href="https://westcarletonss.ocdsb.ca/uploads/9556/WestCarletonSS/1731012952-155w_95h_WestCarletonSS.png" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Locker Distribution</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 0;
+                margin: 0;
+                height: 100vh;
+                background-color: #ffffff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #container {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+            #map {
+                width: 100%;
+                height: 100%;
+                background-image: url("images/detailMap.jpg");
+                background-size: 60%;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            #top-left, #top-right {
+                position: absolute;
+                top: 20px;
+                z-index: 10;
+            }
+            #top-left {
+                left: 20px;
+            }
+            #top-right {
+                right: 20px;
+            }
+            button {
+                padding: 9px;
+                font-size: 16px;
+                cursor: pointer;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                margin-right: 10px;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+            #search-bar {
+                padding: 9px;
+                font-size: 14px;
+                width: 200px;
+            }
+            #back-arrow {
+                padding: 9px;
+                cursor: pointer;
+                background-color: #f4f4f4;
+                color: #000000;
+                border-radius: 3px;
+                border: 1px solid #000000;
+            }
+            #lvlSwitcher {
+                width: 40px;
+                background-color: #f4f4f4;
+                color: #000000;
+                border-radius: 3px;
+                border: 1px solid #000000;
+            }
+            #user-settings {
+                width: 38px;
+                height: 38px;
+                background-color: #f4f4f4;
+                color: #000000;
+                border-radius: 3px;
+                border: 1px solid #000000;
+            }
+            #westIMG {
+                position: absolute;
+                bottom: 15px;
+                right: 25px;
+                width: 50px;
+                padding: 12px;
+            }
+            .modal {
+                display: none;
+                position: fixed;
+                top: 20%;
+                left: 30%;
+                width: 300px;
+                background-color: white;
+                border: 1px solid #ccc;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+        </style>
+        <script>
+            function showModal() {
+              document.getElementById("myModal").style.display = "block";
+            }
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <!-- Top Left: Import/Export buttons and level 1 & 2 switcher -->
+            <div id="top-left">
+                <input type="file" id="file-input" accept=".csv" style="display: none;">
+                <button id="import-btn" onclick="document.getElementById('file-input').click();">Import CSV</button>
+                <button id="export-btn">Export Data as CSV</button>
+                <button id="lvlSwitcher">↑↓</button>
+            </div>
+
+            <!-- Top Right: Search Bar and Back Arrow -->
+            <div id="top-right">
+                <button id="user-settings" onclick="showModal()">U</button>
+                <button id="back-arrow" onclick="window.history.back();">←</button>
+                <label for="search-bar"></label><input type="text" id="search-bar" placeholder="Search..." />
+                <div id="search-suggestions" style="
+                             position: absolute;
+                             top: 45px;
+                             right: 20px;
+                             width: 200px;
+                             background: white;
+                             border: 1px solid #ccc;
+                             z-index: 999;
+                             font-family: Arial, sans-serif;
+                             display: none;
+                             max-height: 150px;
+                             overflow-y: auto;
+                             "></div>
+            </div>
+
+            <!-- Map (Full Screen) with provided image -->
+            <div id="map"></div>
+        </div>
+
+        <img id="westIMG" src="https://westcarletonss.ocdsb.ca/uploads/9556/WestCarletonSS/1731012952-155w_95h_WestCarletonSS.png" alt="West Carleton Logo" />
+
+        <script src="CSV_importer_Exporter.js"></script>
+
+        <script src="Search_Bar.js"></script>
+
+        <div id="myModal" class="modal">
+            <h2>Custom In-Page Content</h2>
+            <p>This doesn't open a new tab or window.</p>
+        </div>
+    </body>
+</html>
