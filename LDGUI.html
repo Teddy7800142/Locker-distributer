@@ -27,7 +27,7 @@
             #map {
                 width: 100%;
                 height: 100%;
-                background-image: url("images/detailMap.jpg");
+                background-image: url("images/Floor1.jpg");
                 background-size: 60%;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -97,20 +97,16 @@
             .modal {
                 display: none;
                 position: fixed;
-                top: 20%;
-                left: 30%;
-                width: 300px;
+                top: 12%;
+                right: 20%;
+                width: 250px;
+                height: 100px;
                 background-color: white;
                 border: 1px solid #ccc;
                 padding: 20px;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }
         </style>
-        <script>
-            function showModal() {
-              document.getElementById("myModal").style.display = "block";
-            }
-        </script>
     </head>
     <body>
         <div id="container">
@@ -124,7 +120,7 @@
 
             <!-- Top Right: Search Bar and Back Arrow -->
             <div id="top-right">
-                <button id="user-settings" onclick="showModal()">U</button>
+                <button id="user-settings" onclick="userButtonPress()">U</button>
                 <button id="back-arrow" onclick="window.history.back();">←</button>
                 <label for="search-bar"></label><input type="text" id="search-bar" placeholder="Search..." />
                 <div id="search-suggestions" style="
@@ -146,15 +142,98 @@
             <div id="map"></div>
         </div>
 
-        <img id="westIMG" src="https://westcarletonss.ocdsb.ca/uploads/9556/WestCarletonSS/1731012952-155w_95h_WestCarletonSS.png" alt="West Carleton Logo" />
+        <img id="westIMG" src="https://westcarletonss.ocdsb.ca/uploads/9556/WestCarletonSS/1731012952-155w_95h_WestCarletonSS.png" alt="West logo"/>
 
         <script src="CSV_importer_Exporter.js"></script>
 
         <script src="Search_Bar.js"></script>
 
-        <div id="myModal" class="modal">
-            <h2>Custom In-Page Content</h2>
-            <p>This doesn't open a new tab or window.</p>
+        <!-- user settings pop-up -->
+        <div id="userSetting" class="modal">
+            <p>User - <strong id="fullName"></strong></p>
+            <div style="display: flex; gap: 5px;">
+                <button id="signout" onclick="GO TO SIGN IN SCREEN">Sign-Out</button>
+                <!-- if admin is signed in -->
+                <div id="adminView">
+                    <button id="newUser" onclick="showModal('userOptions')">Users</button>
+                </div>
+            </div>
         </div>
+
+        <!-- displays user options for admin -->
+        <div id="userOptions" class="modal">
+            <div style="display: flex; flex-direction: column; gap: 10px; padding: 10px;">
+                <button id="addNewUserB" onClick="showModal('addNewUser')">Add new User</button>
+                <button id="cUsersB">Current Users</button>
+            </div>
+        </div>
+
+        <!-- lets an admin create a new account for another person -->
+        <div id="addNewUser" class="modal">
+            <div style="display: flex; align-items: center; gap: 5px; padding: 4px;">
+                <label for="newUserName" style="min-width: 50px;">Name:</label>
+                <input id="newUserName" type="text" placeholder="e.g. FIRST LAST" style="height: 20px; width: 200px;" />
+            </div>
+            <div style="display: flex; align-items: center; gap: 5px; padding: 4px;">
+                <label for="newUserUser" style="min-width: 50px;">User:</label>
+                <input id="newUserUser" type="text" placeholder="Log-In Name" style="height: 20px; width: 200px;" />
+            </div>
+            <div style="display: flex; align-items: center; gap: 5px; padding: 4px;">
+                <label for="newUserPass" style="min-width: 50px;">Pass:</label>
+                <input id="newUserPass" type="text" placeholder="Password" style="height: 20px; width: 200px;" />
+            </div>
+        </div>
+
+        <!-- displays the models passed into the function -->
+        <script>
+            // opens and closes the userSettings modal on button press
+            let isOpen = false;
+            function userButtonPress() {
+                if (isOpen === false) {
+                    isOpen = true;
+                    showModal("userSetting");
+                }
+                 else {
+                    isOpen = false;
+                    closeALL();
+                 }
+            }
+
+            // shows any modal passed into the function
+            function showModal(modal) {
+                document.getElementById(modal).style.display = 'block';
+            }
+
+            // closes any modal passed into the function
+            function closeModal(modal) {
+                document.getElementById(modal).style.display = 'none';
+            }
+
+            // closes all opened modals
+            function closeALL() {
+                document.getElementById('userSetting').style.display = 'none';
+                document.getElementById('userOptions').style.display = 'none';
+                document.getElementById('addNewUser').style.display = 'none';
+                document.getElementById('currentUsers').style.display = 'none';
+            }
+
+            // Close modal on Escape key
+            window.onkeydown = function(event) {
+                if (event.key === 'Escape') {
+                    closeALL();
+                    isOpen = false;
+                }
+            };
+
+            const firstName = 'Avery';
+            const lastName = 'Oegema';
+
+            function getName() {
+                return firstName + ' ' + lastName;
+            }
+
+            // Displays full name in user settings modal
+            document.getElementById('fullName').innerText = getName();
+        </script>
     </body>
 </html>
