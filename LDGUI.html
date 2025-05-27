@@ -106,6 +106,22 @@
                 padding: 20px;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }
+
+            table {
+              width: 90%;
+              max-width: 1200px;
+              margin: 20px auto;
+              border-collapse: collapse;
+              background: #fff;
+            }
+            th, td {
+              padding: 10px;
+              border: 1px solid #ccc;
+              text-align: left;
+            }
+            th {
+              background-color: #eee;
+            }
         </style>
     </head>
     <body>
@@ -115,13 +131,13 @@
                 <input type="file" id="file-input" accept=".csv" style="display: none;">
                 <button id="import-btn" onclick="document.getElementById('file-input').click();">Import CSV</button>
                 <button id="export-btn">Export Data as CSV</button>
-                <button id="lvlSwitcher">↑↓</button>
             </div>
 
             <!-- Top Right: Search Bar and Back Arrow -->
             <div id="top-right">
                 <button id="user-settings" onclick="userButtonPress()">U</button>
-                <button id="back-arrow" onclick="window.history.back();">←</button>
+                <button id="lvlSwitcher">↑↓</button>
+                <button id="back-arrow" onclick="">←</button>
                 <label for="search-bar"></label><input type="text" id="search-bar" placeholder="Search..." />
                 <div id="search-suggestions" style="
                              position: absolute;
@@ -140,6 +156,19 @@
 
             <!-- Map (Full Screen) with provided image -->
             <div id="map"></div>
+
+            <!-- Table Section -->
+            <table id="lockerTable" style="margin-top: 650px;">
+                <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Homeroom</th>
+                    <th>Assigned Locker</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
 
         <img id="westIMG" src="https://westcarletonss.ocdsb.ca/uploads/9556/WestCarletonSS/1731012952-155w_95h_WestCarletonSS.png" alt="West logo"/>
@@ -152,7 +181,7 @@
         <div id="userSetting" class="modal">
             <p>User - <strong id="fullName"></strong></p>
             <div style="display: flex; gap: 5px;">
-                <button id="signout" onclick="GO TO SIGN IN SCREEN">Sign-Out</button>
+                <button id="signout" onclick="window.history.back();">Sign-Out</button>
                 <!-- if admin is signed in -->
                 <div id="adminView">
                     <button id="newUser" onclick="showModal('userOptions')">Users</button>
@@ -164,76 +193,48 @@
         <div id="userOptions" class="modal">
             <div style="display: flex; flex-direction: column; gap: 10px; padding: 10px;">
                 <button id="addNewUserB" onClick="showModal('addNewUser')">Add new User</button>
-                <button id="cUsersB">Current Users</button>
+                <button id="cUsersB" onclick="showModal('currentUsers')">Current Users</button>
             </div>
         </div>
 
         <!-- lets an admin create a new account for another person -->
         <div id="addNewUser" class="modal">
-            <div style="display: flex; align-items: center; gap: 5px; padding: 4px;">
+            <div style="display: flex; align-items: center; gap: 5px; padding: 1px;">
                 <label for="newUserName" style="min-width: 50px;">Name:</label>
                 <input id="newUserName" type="text" placeholder="e.g. FIRST LAST" style="height: 20px; width: 200px;" />
             </div>
-            <div style="display: flex; align-items: center; gap: 5px; padding: 4px;">
-                <label for="newUserUser" style="min-width: 50px;">User:</label>
-                <input id="newUserUser" type="text" placeholder="Log-In Name" style="height: 20px; width: 200px;" />
-            </div>
-            <div style="display: flex; align-items: center; gap: 5px; padding: 4px;">
+            <div style="display: flex; align-items: center; gap: 5px; padding: 1px;">
                 <label for="newUserPass" style="min-width: 50px;">Pass:</label>
                 <input id="newUserPass" type="text" placeholder="Password" style="height: 20px; width: 200px;" />
             </div>
+            <div style="display: flex; align-items: center; gap: 5px; padding: 1px;">
+                <label for="powerLvl">Power:</label>
+                <select id="powerLvl" name="power">
+                    <option value="viewer">Viewer</option>
+                    <option value="editor">Editor</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div style="display: flex; align-items: center; gap: 5px; padding: 1px;">
+                <button id="createNewUser" onclick="CREATE NEW USER HERE" style="height: 28px; width: 400px; padding: 5px;">Create New User</button>
+            </div>
         </div>
 
-        <!-- displays the models passed into the function -->
-        <script>
-            // opens and closes the userSettings modal on button press
-            let isOpen = false;
-            function userButtonPress() {
-                if (isOpen === false) {
-                    isOpen = true;
-                    showModal("userSetting");
-                }
-                 else {
-                    isOpen = false;
-                    closeALL();
-                 }
-            }
-
-            // shows any modal passed into the function
-            function showModal(modal) {
-                document.getElementById(modal).style.display = 'block';
-            }
-
-            // closes any modal passed into the function
-            function closeModal(modal) {
-                document.getElementById(modal).style.display = 'none';
-            }
-
-            // closes all opened modals
-            function closeALL() {
-                document.getElementById('userSetting').style.display = 'none';
-                document.getElementById('userOptions').style.display = 'none';
-                document.getElementById('addNewUser').style.display = 'none';
-                document.getElementById('currentUsers').style.display = 'none';
-            }
-
-            // Close modal on Escape key
-            window.onkeydown = function(event) {
-                if (event.key === 'Escape') {
-                    closeALL();
-                    isOpen = false;
-                }
-            };
-
-            const firstName = 'Avery';
-            const lastName = 'Oegema';
-
-            function getName() {
-                return firstName + ' ' + lastName;
-            }
-
-            // Displays full name in user settings modal
-            document.getElementById('fullName').innerText = getName();
-        </script>
+        <div id="currentUsers" class="modal">
+            <div class="scrollable-table" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc;">
+                <table id="userTable" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Password</th>
+                    </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <script src="Admin.js"></script>
     </body>
 </html>
